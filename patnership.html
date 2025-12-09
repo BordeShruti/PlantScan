@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partnerships & Resources</title>
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        /* RESET */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            background: #f1f5f3;
+            color: #333;
+            height: 100%;
+        
+        }
+
+        .container {
+      max-width: 950px;
+      margin: 50px auto;
+      padding: 0 20px;
+      text-align: center;
+        }
+
+
+        /* HEADER */
+        .header {
+            background: linear-gradient(90deg,  #19c14b 0%, #2980b9 100%);
+            padding: 18px 0;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.18);
+            color: #fff;
+             width: 100%;
+  
+ 
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 3px solid rgba(255,255,255,0.1);
+        }
+        /* LOGO */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 40px;
+}
+
+.logo img {
+  height: 40px;
+  width: 40px;
+  border-radius: 8px;
+}
+
+.logo span {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .header nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        .header nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            padding-bottom: 4px;
+            transition: 0.3s;
+        }
+
+        .header nav ul li a:hover,
+        .header nav ul li a.active {
+            border-bottom: 2px solid #fff;
+        }
+        /* NAV MENU */
+.nav-menu ul {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: 25px;
+}
+.nav-menu {
+    margin-right: 50px;
+     margin-left: 20px;
+}
+
+.nav-menu ul li a {
+  color: #fff;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: 0.3s ease;
+}
+
+.nav-menu ul li a i {
+  margin-right: 6px;
+}
+
+.nav-menu ul li a:hover,
+.nav-menu ul li a.active {
+  background: rgba(255, 255, 255, 0.18);
+  
+}
+
+        /* PAGE HEADER */
+        .page-header {
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 25px;
+        }
+
+        .page-header h2 {
+            font-size: 2.4rem;
+            color: #145c2c;
+            font-weight: 700;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: #666;
+            margin-top: 8px;
+        }
+
+        /* TABS */
+        .partnership-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 35px 0;
+        }
+
+        .partnership-tab-btn {
+            background: #e8f5ec;
+            border: 1px solid #cce8d5;
+            padding: 12px 26px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #1e6b36;
+            font-size: 1rem;
+            transition: 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .partnership-tab-btn:hover {
+            background: #2a944c;
+            color: #fff;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            transform: translateY(-2px);
+        }
+
+        .partnership-tab-btn.active {
+            background: linear-gradient(90deg, #16a34a, #181463 );
+            color: #fff;
+            border-color:#16a34a, #4f46e5 6;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+        }
+
+        /* CONTENT AREAS */
+        .partnership-tab-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.4s ease, transform 0.3s ease;
+        }
+
+        .partnership-tab-content.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            font-size: 1.7rem;
+            color: #145c2c;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        /* GRID */
+        .partnership-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+            gap: 28px;
+        }
+
+        /* CARDS */
+        .partnership-card {
+            background: #fff;
+            padding: 25px;
+            border-radius: 15px;
+            min-height: 260px;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.12);
+            transition: 0.3s ease;
+            border: 1px solid #e5efe7;
+        }
+
+        .partnership-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.18);
+            border-color: #cce8d5;
+        }
+
+        .partnership-card h3 {
+            font-size: 1.25rem;
+            color: #1d6e37;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .partnership-card p {
+            margin-top: 8px;
+            color: #444;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .partnership-card ul {
+            margin-top: 10px;
+            padding-left: 20px;
+            color: #444;
+        }
+
+        .partnership-link {
+            display: inline-block;
+            margin-top: 14px;
+            color: #1b8f40;
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .partnership-link:hover {
+            color: #52df7c;
+            transform: translateX(3px);
+        }
+
+        /* FOOTER */
+        .footer {
+            background: linear-gradient(90deg,  #19c14b 0%, #2980b9 100%);
+            padding: 18px 0;
+            margin-top: 50px;
+            text-align: center;
+            color: #fff;
+            font-size: 0.95rem;
+            box-shadow: 0 -3px 12px rgba(0,0,0,0.15);
+        }
+
+        @media (max-width: 600px) {
+            .partnership-tabs {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+<header class="header">
+
+  <!-- LOGO -->
+      <div class="logo">
+        <img src="static/image/Screenshot 2025-09-24 002549.png" alt="PlantScan Logo">
+        <span>PlantScan</span>
+      </div>
+
+
+  <!-- NAVIGATION -->
+  <nav class="nav-menu">
+    <ul>
+     <li><a href="{{ url_for('home') }}"><i class="fas fa-landmark"></i> HOME</a></li>
+
+    </ul>
+  </nav>
+
+
+
+</header>
+
+
+    <!-- MAIN -->
+    <main class="container">
+
+        <div class="page-header">
+            <h2>Our Partnerships & Resources</h2>
+            <p>Reliable government schemes, premium offers, and powerful tools — all in one place.</p>
+        </div>
+
+        <div class="partnership-tabs">
+            <button class="partnership-tab-btn active" data-tab="government">Government Resources</button>
+            <button class="partnership-tab-btn" data-tab="private">Private Offers</button>
+            <button class="partnership-tab-btn" data-tab="tools">Tools & Apps</button>
+        </div>
+
+        <!-- CONTENT -->
+        <div class="partnership-content">
+
+            <!-- GOVERNMENT -->
+            <section id="government" class="partnership-tab-content active">
+                <h3 class="section-title">Central & State Government Schemes</h3>
+
+                <div class="partnership-grid">
+
+                    <div class="partnership-card">
+                        <h3><i class="fa fa-landmark"></i> PM-KISAN Scheme</h3>
+                        <p>Financial support of ₹6000/year directly to farmers via DBT.</p>
+                        <ul>
+                            <li>All farm sizes</li>
+                            <li>Direct benefit transfer</li>
+                        </ul>
+                       <a class="partnership-link" 
+   href="https://pmkisan.gov.in/" 
+   target="_blank" 
+   rel="noopener noreferrer">
+   Visit Official Website →
+</a> 
+ 
+                    </div>
+
+                    <div class="partnership-card">
+                        <h3><i class="fa fa-leaf"></i> National Horticulture Board</h3>
+                        <p>Subsidies, advisories, market insights & horticulture development programs.</p>
+                        <ul>
+                            <li>Subsidy information</li>
+                            <li>Crop-wise advisories</li>
+                        </ul>
+                        <a class="partnership-link" 
+   href="https://nhb.gov.in/" 
+   target="_blank" 
+   rel="noopener noreferrer">
+   Explore NHB →
+</a>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- PRIVATE -->
+            <section id="private" class="partnership-tab-content">
+                <h3 class="section-title">Private Sector Partner Offers</h3>
+
+                <div class="partnership-grid">
+
+                    <div class="partnership-card">
+                        <h3><i class="fa fa-handshake"></i> Bio-Pesticide Discount</h3>
+                        <p>Flat 15% off on all bio-friendly pest control solutions.</p>
+                        <ul>
+                            <li>Free expert consultation</li>
+                            <li>Exclusive offer for PlantScan users</li>
+                        </ul>
+                        <a class="partnership-link" href="#">Get Code →</a>
+                    </div>
+
+                    <div class="partnership-card">
+                        <h3><i class="fa fa-tractor"></i> Smart Farming Equipment</h3>
+                        <p>Lease or purchase modern precision farming tools at reduced rates.</p>
+                        <ul>
+                            <li>Low-interest finance plans</li>
+                            <li>Free trial sessions</li>
+                        </ul>
+                        <a class="partnership-link" href="#">View Catalogue →</a>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- TOOLS -->
+            <section id="tools" class="partnership-tab-content">
+                <h3 class="section-title">Recommended Tools & Apps</h3>
+
+                <div class="partnership-grid">
+
+                    <div class="partnership-card">
+                        <h3><i class="fa fa-map-marked-alt"></i> Field Area Measure Tool</h3>
+                        <p>Satellite-based land measurement for planning irrigation and fertilizers.</p>
+                        <a class="partnership-link" href="#">Learn More →</a>
+                    </div>
+
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>© 2025 PlantScan — Empowering Farmers.</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const tabs = document.querySelectorAll(".partnership-tab-btn");
+            const contents = document.querySelectorAll(".partnership-tab-content");
+
+            tabs.forEach(tab => {
+                tab.addEventListener("click", () => {
+                    tabs.forEach(t => t.classList.remove("active"));
+                    contents.forEach(c => c.classList.remove("active"));
+
+                    tab.classList.add("active");
+                    document.getElementById(tab.dataset.tab).classList.add("active");
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

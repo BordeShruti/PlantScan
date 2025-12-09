@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PlantScan | Dashboard</title>
+
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #e8f5e9;
+      color: #333;
+      min-height: 100vh;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    .dashboard-container {
+      max-width: 950px;
+      margin: 50px auto;
+      padding: 0 20px;
+      text-align: center;
+    }
+
+    .dashboard-title { font-size: 2.5rem; color: #1b5e20; font-weight: 700; margin-bottom: 10px; }
+    .dashboard-sub { font-size: 1.1rem; color: #2e7d32; margin-bottom: 50px; }
+
+    .card {
+      background: linear-gradient(145deg, #ffffff, #dcedc8);
+      padding: 30px 25px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      margin-bottom: 30px;
+      text-align: left;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover { transform: translateY(-5px); box-shadow: 0 12px 25px rgba(0,0,0,0.12); }
+
+    .card h3 { color: #33691e; margin-bottom: 10px; }
+    .card p { color: #4e4e4e; font-size: 0.95rem; }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 22px;
+      margin-top: 15px;
+      background: linear-gradient(135deg, #43a047, #1b5e20);
+      color: #fff;
+      font-weight: 500;
+      border-radius: 10px;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+    .btn:hover { background: linear-gradient(135deg, #1b5e20, #43a047); }
+
+    .logout-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #ff7043, #d84315);
+      padding: 12px 25px;
+      color: #fff;
+      border-radius: 10px;
+      margin-top: 25px;
+      font-weight: 500;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+    .logout-btn:hover { background: linear-gradient(135deg, #d84315, #ff7043); }
+
+    @media (max-width: 768px) {
+      .dashboard-container { padding: 20px; }
+      .dashboard-title { font-size: 2rem; }
+      .card { padding: 25px 20px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="dashboard-container">
+    <h2 class="dashboard-title">Welcome to PlantScan Dashboard</h2>
+    <p class="dashboard-sub">You are now logged in. Manage your plants and predictions 🌿</p>
+
+    <div class="card">
+      <h3>Your Profile</h3>
+      <p id="userEmail">Logged in as: <b></b></p>
+    </div>
+
+    <div class="card">
+      <h3>Plant Disease Detection</h3>
+      <p>Upload plant images to get disease predictions quickly and accurately.</p>
+      <a href="/" class="btn"><i class="fa fa-leaf"></i> Go to Prediction</a>
+    </div>
+
+    <button class="logout-btn" id="logoutBtn"><i class="fa fa-sign-out-alt"></i> Logout</button>
+  </div>
+
+<script>
+// Check if user is logged in
+let email = localStorage.getItem("userEmail");
+if (!email) {
+    window.location.href = "/login";  // redirect if not logged in
+}
+document.getElementById("userEmail").innerHTML = "Logged in as: <b>" + email + "</b>";
+
+let username = localStorage.getItem("username");
+document.querySelector(".dashboard-title").textContent = "Welcome, " + (username || "User") + " 🌿";
+document.getElementById("logoutBtn").addEventListener("click", function () {
+    localStorage.removeItem("username");
+    localStorage.removeItem("userEmail");
+    window.location.href = "/login";
+});
+
+
+</script>
+
+</body>
+</html>

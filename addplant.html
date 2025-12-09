@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contribute Recommendation</title>
+<style>
+/* ==== CSS ==== */
+body {
+    font-family: Arial, sans-serif;
+    background: #f1f6f1;
+    margin: 0;
+    padding: 40px 20px; /* reduced right space */
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 600px; /* now more fluid */
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+    
+
+    
+
+    .dashboard-container {
+      max-width: 950px;
+      margin: 50px auto;
+      padding: 0 20px;
+      text-align: center;
+    }
+h2 {
+    margin-bottom: 10px;
+    color: #2e7d32;
+}
+
+.intro {
+    color: #555;
+    font-size: 0.9em;
+    margin-bottom: 15px;
+}
+
+label {
+    font-size: 0.9em;
+    margin-top: 10px;
+    display: block;
+    color: #333;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+button {
+    margin-top: 15px;
+    width: 100%;
+    padding: 12px;
+    background: #43a047;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #388e3c;
+}
+
+#msg {
+    margin-top: 12px;
+    font-size: 0.95em;
+    text-align: center;
+}
+
+/* Make textarea responsive */
+textarea {
+    resize: vertical;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Contribute Pest / Fertilizer Recommendation</h2>
+    <p class="intro">Share your crop-specific disease or fertilizer advice.</p>
+
+    <form id="contribForm">
+        <label>Crop *</label>
+        <input type="text" id="crop" required placeholder="Tomato">
+
+        <label>Disease / Issue *</label>
+        <input type="text" id="disease" required placeholder="Late Blight">
+
+        <label>Pesticide / Product</label>
+        <textarea id="products" placeholder="product names, active ingredients"></textarea>
+
+        <label>Dosage / How to Apply</label>
+        <textarea id="dosage" placeholder="dosage rate, spray interval etc."></textarea>
+
+        <label>Organic / Natural Options</label>
+        <textarea id="organic" placeholder="neem oil, biological control"></textarea>
+
+        <label>Fertilizer Recommendation</label>
+        <textarea id="fertilizer" placeholder="NPK ratio or deficiency correction"></textarea>
+
+        <button type="button" onclick="saveContribution()">Submit</button>
+
+        <p id="msg"></p>
+    </form>
+</div>
+
+<script>
+// ==== JavaScript ====
+function saveContribution() {
+    const crop = document.getElementById("crop").value.trim();
+    const disease = document.getElementById("disease").value.trim();
+    const products = document.getElementById("products").value.trim();
+    const dosage = document.getElementById("dosage").value.trim();
+    const organic = document.getElementById("organic").value.trim();
+    const fertilizer = document.getElementById("fertilizer").value.trim();
+    const msg = document.getElementById("msg");
+
+    if (!crop || !disease) {
+        msg.textContent = "Crop and Disease are required.";
+        msg.style.color = "red";
+        return;
+    }
+
+    // Save locally (demo)
+    const entry = {
+        crop,
+        disease,
+        products,
+        dosage,
+        organic,
+        fertilizer,
+        time: new Date().toLocaleString()
+    };
+
+    let data = JSON.parse(localStorage.getItem("contributions") || "[]");
+    data.push(entry);
+    localStorage.setItem("contributions", JSON.stringify(data));
+
+    msg.style.color = "green";
+    msg.textContent = "Submitted successfully!";
+
+    document.getElementById("contribForm").reset();
+}
+</script>
+
+</body>
+</html>

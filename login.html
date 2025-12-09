@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PlantScan | Login</title>
+
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #c3eaaf, #bff986);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #333;
+    }
+    a { color: #08a42c; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .container { width: 100%; max-width: 500px; padding: 25px; }
+    .login-box {
+      background-color: #fff;
+      border-radius: 16px;
+      padding: 60px 45px;
+      box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+      text-align: center;
+      position: relative;
+          max-width: 500px;    /* Add this */
+    margin: auto;
+    }
+    .login-box h2 { font-size: 30px; color: #166534; margin-bottom: 8px; }
+    .login-box .subtitle { font-size: 14px; color: #64748b; margin-bottom: 30px; }
+
+    .form-group { position: relative; margin-bottom: 25px; text-align: left; }
+    .form-group input {
+      width: 100%;
+      padding: 14px 12px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      outline: none;
+      transition: 0.3s;
+    }
+    .form-group input:focus { border-color: #28a745; }
+    .form-group label {
+      position: absolute;
+      top: 50%;
+      left: 12px;
+      transform: translateY(-50%);
+      background-color: #fff;
+      padding: 0 5px;
+      color: #64748b;
+      font-size: 14px;
+      pointer-events: none;
+      transition: 0.3s;
+    }
+    .form-group input:focus + label,
+    .form-group input:not(:placeholder-shown) + label {
+      top: -10px;
+      font-size: 12px;
+      color: #28a745;
+    }
+
+    #loginBtn {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #28a745, #166534);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 500;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+    }
+    #loginBtn:hover { background: linear-gradient(135deg, #166534, #28a745); }
+
+    .message {
+      font-size: 13px;
+      height: 18px;
+      margin-bottom: 10px;
+      display: none;
+    }
+    .message.error { color: red; }
+    .message.success { color: green; }
+
+    .register-text { margin-top: 15px; font-size: 13px; color: #36619c; }
+
+    @media (max-width: 480px) {
+      .login-box { padding: 35px 20px; }
+    }
+  </style>
+</head>
+
+<body>
+<div class="container">
+  <div class="login-box">
+    <h2>Welcome Back to PlantScan</h2>
+    <p class="subtitle">Log in to access unlimited predictions and your history.</p>
+
+    <form id="loginForm">
+      <div class="form-group">
+        <input type="email" id="email" placeholder=" " required>
+        <label for="email">Email Address</label>
+      </div>
+
+      <div class="form-group">
+        <input type="password" id="password" placeholder=" " required>
+        <label for="password">Password</label>
+      </div>
+
+      <div class="message" id="authMessage"></div>
+
+      <button type="submit" id="loginBtn">
+        <i class="fa fa-sign-in-alt"></i> Log In
+      </button>
+
+  <p class="register-text">
+    Don't have an account? 
+    <a href="{{ url_for('register') }}">Register here</a>
+</p>
+
+    </form>
+  </div>
+</div>
+<script>
+document.getElementById("loginForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const emailInput = document.getElementById("email").value.trim().toLowerCase(); // lowercase
+    const passwordInput = document.getElementById("password").value;
+    const messageDiv = document.getElementById("authMessage");
+
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+
+    const user = users.find(u => u.email.toLowerCase() === emailInput);
+
+    if (!user) {
+        messageDiv.style.display = "block";
+        messageDiv.textContent = "Email not registered!";
+        messageDiv.className = "message error";
+        return;
+    }
+
+    if (user.password !== passwordInput) {
+        messageDiv.style.display = "block";
+        messageDiv.textContent = "Incorrect password!";
+        messageDiv.className = "message error";
+        return;
+    }
+
+    // Successful login
+    messageDiv.style.display = "block";
+    messageDiv.textContent = "Login successful! Redirecting...";
+    messageDiv.className = "message success";
+
+    localStorage.setItem("username", user.name);
+    localStorage.setItem("userEmail", user.email);
+
+    // Redirect after 1.5 seconds
+messageDiv.textContent = "Login successful! Redirecting...";
+messageDiv.className = "message success";
+setTimeout(() => {
+    window.location.href = "/dashboard";  // Flask route
+}, 1500);
+
+
+});
+</script>
+
+</body>
+</html>

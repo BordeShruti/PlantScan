@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PlantScan</title>
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+<body>
+
+  <div class="container">
+   
+
+    <!-- HEADER -->
+    <header class="header">
+      <div class="logo">
+        <img src="static/image/Screenshot 2025-09-24 002549.png" alt="PlantScan Logo">
+        <span>PlantScan</span>
+      </div>
+
+      <nav class="nav-menu">
+<ul>
+  <li><a href="{{ url_for('dashboard') }}" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+  <li><a href="{{ url_for('addplant') }}"><i class="fas fa-plus-circle"></i> Add Plant</a></li>
+  <li><a href="{{ url_for('workshop') }}"><i class="fas fa-chalkboard-teacher"></i> Workshop</a></li>
+  <li><a href="{{ url_for('partnership') }}"><i class="fas fa-landmark"></i> Partnership</a></li>
+</ul>
+
+      </nav>
+<div class="user-profile">
+    <a href="{{ url_for('login') }}">
+        <img src="static/image/Profile.png" alt="User Profile" class="profile-pic" id="profileimage">
+    </a>
+    <button class="action-btn" id="logoutBtn" type="button" aria-label="Logout">
+        <i class="fas fa-sign-out-alt"></i>
+    </button>
+</div>
+ <!-- Missing closing div -->
+</header>
+
+
+    <!-- HERO SECTION -->
+    <section class="hero-section">
+      <div class="hero-content">
+        <h1>YOUR PLANT, YOUR HEALTH COMPANION</h1>
+        <p>Snap, Scan, Find.</p>
+      </div>
+      <div class="hero-info">
+        <span class="date">TODAY<br><strong></strong></span>
+        <span class="weather"><i class="fas fa-cloud-sun"></i><br>22°C Partly Cloudy</span>
+      </div>
+    </section>
+
+    <!-- UPLOAD + GREETING CARD -->
+    <div class="upload-card">
+      <div class="greeting-bar">
+        <span id="greetingText" data-username="{{ user_name }}">Good Morning, {{ user_name }}!</span>
+        <span class="right-text">You have unlimited predictions.</span>
+      </div>
+
+      <main class="main-content">
+        
+
+        <!-- SCANNER / UPLOAD CARD -->
+        <div class="card scanner-card">
+          <div class="scanner-icon"><i class="fas fa-camera"></i></div>
+          <h3>Upload Your Plant Photo</h3>
+          <p>Take a clear photo of your plant's leaves or stems for accurate disease detection.</p>
+          <div class="scanner-buttons">
+            <button class="btn" id="upload-btn">Upload Photo</button>
+            <input type="file" id="file-input" style="display:none;">
+          </div>
+        </div>
+
+        <!-- IMAGE PREVIEW AND RESULTS -->
+        <div id="image-preview" style="display:none;">
+          <img id="plant-image" src="" alt="Plant Image">
+          <button id="reset-btn" style="display:inline-block;">Reset</button>
+        </div>
+
+        <div id="loading" style="display:none;">Analyzing... Please wait.</div>
+        <div id="error-msg" style="display:none; color:red;"></div>
+
+        <section id="results" style="display:none;">
+          <div id="plant-info"></div>
+          <div id="health-status"></div>
+          <div id="treatment-section"></div>
+          <button id="analyze-again">Analyze Again</button>
+        </section>
+
+        <!-- QUICK ACTIONS -->
+               <h2 class="quick-actions-title">Quick Actions & Resources</h2>
+<div class="quick-actions-grid">
+  <a href="{{ url_for('chatbot') }}" class="action-card">
+    <div class="icon-circle">🌱</div>
+    <h3>Rule-Based Symptom Check</h3>
+    <p>Describe symptoms for a diagnosis based on known rules.</p>
+  </a>
+  <a href="{{ url_for('workshop') }}" class="action-card">
+    <div class="icon-circle">📚</div>
+    <h3>E-Learning Modules</h3>
+    <p>Learn best practices for prevention and organic farming.</p>
+  </a>
+  <a href="{{ url_for('addplant') }}" class="action-card">
+    <div class="icon-circle">🧑‍🤝‍🧑</div>
+    <h3>Community Contributions</h3>
+    <p>View verified, real-world data from farmers like you.</p>
+  </a>
+  <a href="https://agsci.colostate.edu/agbio/ipm/agricultural-pests/" class="action-card">
+    <div class="icon-circle">🦟</div>
+    <h3>Pest & Insect Search</h3>
+    <p>Identify common agricultural pests and insects.</p>
+  </a>
+  <a href="https://glandnav.com/tools/fertilizer-calculator" class="action-card">
+    <div class="icon-circle">🧮</div>
+    <h3>N-P-K Fertilizer Calculator</h3>
+    <p>Determine optimal nutrient balance for your crop type.</p>
+  </a>
+</div>
+
+
+
+    <!-- CAMERA MODAL -->
+    <div id="camera-container" style="display:none;">
+      <video id="video" autoplay></video>
+      <button id="capture-btn">Capture</button>
+      <button id="cancel-btn">Cancel</button>
+    </div>
+
+    <!-- TIPS SECTION -->
+    <section class="tips-section">
+      <div class="card tips-card">
+        <h3>Tips & Resources</h3>
+        <div class="tip-carousel">
+          <div class="tip">💧 Water plants early in the morning to reduce evaporation.</div>
+          <div class="tip">🌱 Rotate crops to avoid soil-borne diseases.</div>
+          <div class="tip">🍂 Use natural compost for healthier growth.</div>
+        </div>
+      </div>
+      <div class="weather-alert">
+        🌞 It's sunny and hot! Remember to water your outdoor plants.
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <p>&copy; 2025 PlantScan. All rights reserved.</p>
+    </footer>
+
+  </div>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>

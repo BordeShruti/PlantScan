@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<title>PlantScan | Leaf Diagnosis</title>
+<style>
+/* ===== GLOBAL RESET ===== */
+        /* RESET */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            background: #f1f5f3;
+            color: #333;
+            height: 100%;
+        
+        }
+
+        .container {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* HEADER */
+        .header {
+            background: linear-gradient(90deg,  #19c14b 0%, #2980b9 100%);
+            padding: 18px 0;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.18);
+            color: #fff;
+             width: 100%;
+  
+ 
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 3px solid rgba(255,255,255,0.1);
+        }
+        /* LOGO */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 40px;
+}
+
+.logo img {
+  height: 40px;
+  width: 40px;
+  border-radius: 8px;
+}
+
+.logo span {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .header nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        .header nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            padding-bottom: 4px;
+            transition: 0.3s;
+        }
+
+        .header nav ul li a:hover,
+        .header nav ul li a.active {
+            border-bottom: 2px solid #fff;
+        }
+        /* NAV MENU */
+.nav-menu ul {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: 25px;
+}
+.nav-menu {
+    margin-right: 50px;
+     margin-left: 20px;
+}
+
+.nav-menu ul li a {
+  color: #fff;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: 0.3s ease;
+}
+
+.nav-menu ul li a i {
+  margin-right: 6px;
+}
+
+.nav-menu ul li a:hover,
+.nav-menu ul li a.active {
+  background: rgba(255, 255, 255, 0.18);
+  
+}
+
+        /* PAGE HEADER */
+        .page-header {
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 25px;
+        }
+
+        .page-header h2 {
+            font-size: 2.4rem;
+            color: #145c2c;
+            font-weight: 700;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: #666;
+            margin-top: 8px;
+        }
+        
+        /* TABS */
+        .partnership-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 35px 0;
+        }
+
+        .partnership-tab-btn {
+            background: #e8f5ec;
+            border: 1px solid #cce8d5;
+            padding: 12px 26px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #1e6b36;
+            font-size: 1rem;
+            transition: 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .partnership-tab-btn:hover {
+            background: #2a944c;
+            color: #fff;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            transform: translateY(-2px);
+        }
+
+        .partnership-tab-btn.active {
+            background: linear-gradient(90deg, #16a34a, #181463 );
+            color: #fff;
+            border-color:#16a34a, #4f46e5 6;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+        }
+        /* PARTNERSHIP TABS */
+        .partnership-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .partnership-tab-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.4s ease, transform 0.3s ease;
+        }
+
+        .partnership-tab-content.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            font-size: 1.7rem;
+            color: #145c2c;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+/* CARD GRID */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+/* CARD STYLES */
+.card {
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+.card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+.card h3 {
+    margin: 15px 0 10px 0;
+    color: #166534;
+}
+.card p {
+    font-size: 14px;
+    padding: 0 10px 10px 10px;
+}
+.card button {
+    background: #28a745;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px 0 15px 0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+.card button:hover {
+    background: #166534;
+    transform: scale(1.05);
+}
+
+/* CARD COLORS FOR TYPES */
+.card.disease { border-top: 5px solid #ff4500; }
+.card.tip { border-top: 5px solid #ffa500; }
+.card.tool { border-top: 5px solid #1e90ff; }
+.card.crop { border-top: 5px solid #28a745; }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .card img { height: 120px; }
+}
+        @media (max-width: 600px) {
+            .partnership-tabs {
+                flex-direction: column;
+            }
+        }
+   
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+
+  <!-- LOGO -->
+      <div class="logo">
+        <img src="static/image/Screenshot 2025-09-24 002549.png" alt="PlantScan Logo">
+        <span>PlantScan</span>
+      </div>
+
+
+  <!-- NAVIGATION -->
+  <nav class="nav-menu">
+    <ul>
+    <li><a href="{{ url_for('home') }}"><i class="fas fa-landmark"></i> HOME</a></li>
+
+    </ul>
+  </nav>
+</header>
+        <div class="page-header">
+            <h2>Leaf Diagnosis Learning Modules</h2>
+            <p>Learn best practices for prevention and organic farming.</p>
+        </div>
+
+<!-- CARD GRID -->
+<section class="card-grid">
+    <!-- Crop Cards -->
+    <div class="card crop">
+        <img src="static/image/IMG-20251207-WA0024.jpg" alt="Tomato">
+        <h3>Tomato</h3>
+        <p>Water: Moderate | Growth Stage: Flowering</p>
+        <button onclick="window.open('https://www.shutterstock.com/search/tomato-plant-flower', '_blank')">Scan Leaf</button>
+    </div>
+    <div class="card crop">
+        <img src="static/image/WhatsApp Image 2025-12-07 at 19.18.56_8026593d.jpg" alt="Wheat">
+        <h3>Wheat</h3>
+        <p>Water: Low | Growth Stage: Tillering</p>
+        <button onclick="window.open('https://sanangelo.tamu.edu/agronomy/agronomy-publications/growth-stages-of-wheat/', '_blank')">Scan Leaf</button>
+    </div>
+
+    <!-- Disease Cards -->
+    <div class="card disease">
+        <img src="static/image/IMG-20251207-WA0025.jpg" alt="Powdery Mildew">
+        <h3>Powdery Mildew</h3>
+        <p>Severity: Moderate | Action: Remove affected leaves + organic fungicide</p>
+        <button onclick="window.open('https://www.rhs.org.uk/disease/powdery-mildews', '_blank')">Learn More</button>
+    </div>
+    <div class="card disease">
+        <img src="static/image/IMG-20251207-WA0026.jpg" alt="Leaf Spot">
+        <h3>Leaf Spot</h3>
+        <p>Severity: High | Action: Apply bio-pesticide & monitor daily</p>
+        <button onclick="window.open('https://www.shutterstock.com/search/leaf-spot', '_blank')">Learn More</button>
+    </div>
+
+    <!-- Tip Cards -->
+    <div class="card tip">
+        <img src="static/image/IMG-20251207-WA0027.jpg" alt="Watering Tip">
+        <h3>Water Early Morning</h3>
+        <p>Reduce evaporation & avoid fungal growth.</p>
+        <button onclick="window.open('https://www.shutterstock.com/search/water-plants-morning', '_blank')">View Tip</button>
+    </div>
+    <div class="card tip">
+        <img src="static/image/IMG-20251207-WA0028.jpg" alt="Sunlight Tip">
+        <h3>Ensure Sunlight</h3>
+        <p>Plants need 6-8 hours of sunlight daily.</p>
+        <button onclick="window.open('https://www.shutterstock.com/search/plants-need-sunlight?page=6', '_blank')">View Tip</button>
+    </div>
+
+</section>
+
+<!-- JS for Tab Filtering -->
+<script>
+const tabs = document.querySelectorAll('.partnership-tab-btn');
+const cards = document.querySelectorAll('.card');
+
+tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+        // Remove active from all tabs
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        const tabType = tab.getAttribute('data-tab');
+
+        cards.forEach(card => {
+            if(tabType === 'all') {
+                card.classList.remove('hidden');
+            } else if(card.classList.contains(tabType)) {
+                card.classList.remove('hidden');
+            } else {
+                card.classList.add('hidden');
+            }
+        });
+    });
+});
+</script>
+
+</body>
+</html>

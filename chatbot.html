@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Plant Symptom Checker</title>
+
+    <style>
+/* ==== Body Background (New Soft Theme) ==== */
+body {
+    background: #f3f6f1; /* soft greenish-white */
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* ==== Main Container (Updated Color & Look) ==== */
+.symptom-checker-page {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 35px;
+    background: #ffffff;
+    border-radius: 20px;
+    border: 1px solid #e1e8de; /* soft border */
+    box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+    transition: 0.3s ease;
+}
+
+.symptom-checker-page:hover {
+    box-shadow: 0 15px 36px rgba(0,0,0,0.10);
+}
+
+/* ==== Intro Text ==== */
+.intro-text {
+    color: #4a5a40; /* new mild greenish tone */
+    margin-bottom: 25px;
+    font-size: 1.15em;
+    font-weight: 500;
+}
+
+/* ==== Textarea ==== */
+textarea {
+    width: 100%;
+    min-height: 170px;
+    padding: 18px;
+    background: #f8faf7; /* soft light shade */
+    border: 2px solid #d4dfcf;
+    border-radius: 12px;
+    font-size: 16px;
+    resize: vertical;
+    transition: 0.25s ease;
+}
+
+textarea:focus {
+    border-color: #6da66d;
+    background: #ffffff;
+    box-shadow: 0 0 0 4px rgba(109,166,109,0.20);
+}
+
+/* ==== Diagnose Button (New Softer Green) ==== */
+.btn-diagnose {
+    background: linear-gradient(135deg, #7bbf72, #4e9e55);
+    color: white;
+    width: 100%;
+    padding: 16px;
+    border: none;
+    font-size: 1.15em;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
+    margin-top: 18px;
+    letter-spacing: 0.5px;
+    transition: 0.25s ease;
+}
+
+.btn-diagnose:hover {
+    background: linear-gradient(135deg, #72b568, #3f8646);
+    box-shadow: 0 6px 14px rgba(76,175,80,0.30);
+    transform: translateY(-2px);
+}
+
+/* ==== Result Box ==== */
+.diagnosis-result {
+    margin-top: 35px;
+    padding: 25px;
+    background: #f0f7eb;
+    border-radius: 14px;
+    border: 1px solid #cdddc8;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+
+/* Placeholder */
+.placeholder-message {
+    color: #6f7a6b;
+    font-style: italic;
+}
+
+/* ==== Diagnosis Card ==== */
+.diagnosis-card {
+    padding: 18px;
+    background: #ffffff;
+    border-left: 6px solid #4e9e55; /* new soft-medium green */
+    border-radius: 10px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    transition: 0.25s ease;
+}
+
+.diagnosis-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+.diagnosis-card h4 {
+    margin: 0 0 8px 0;
+    color: #3e7c42; /* softer dark green */
+    font-size: 1.22em;
+    font-weight: 700;
+}
+
+.diagnosis-card p {
+    color: #4b544a;
+    font-size: 0.98em;
+    line-height: 1.5;
+}
+
+    </style>
+</head>
+
+<body>
+
+<section class="symptom-checker-page">
+    <h2>Rule-Based Plant Symptom Checker</h2>
+
+    <p>Enter symptoms separated by commas (e.g., yellow leaves, black spots, wilting)</p>
+
+    <textarea id="symptom_input" placeholder="Type symptoms here..."></textarea>
+
+    <button class="btn-diagnose" onclick="runDiagnosis()">Get Diagnosis</button>
+
+    <div id="diagnosisResult" class="diagnosis-result">
+        <p class="placeholder-message">Your diagnosis will appear here.</p>
+    </div>
+</section>
+
+<script>
+    // ---- RULE BASED KNOWLEDGE ---- //
+    const diseaseRules = [
+        {
+            disease: "Leaf Spot",
+            keywords: ["brown spots", "black spots", "circular spots"],
+            solution: "Remove infected leaves, avoid overhead watering, apply copper fungicide."
+        },
+        {
+            disease: "Powdery Mildew",
+            keywords: ["white powder", "white spots", "powdery"],
+            solution: "Increase airflow, avoid water on leaves, use neem oil spray."
+        },
+        {
+            disease: "Root Rot",
+            keywords: ["wilting", "mushy roots", "yellow leaves", "overwatering"],
+            solution: "Reduce watering, repot in dry soil, cut affected roots."
+        },
+        {
+            disease: "Nutrient Deficiency",
+            keywords: ["yellow leaves", "pale leaves", "slow growth"],
+            solution: "Add balanced fertilizer and check soil nutrients."
+        },
+        {
+            disease: "Blight",
+            keywords: ["dark patches", "rapid leaf death", "soft leaves"],
+            solution: "Remove infected parts and apply recommended fungicides."
+        },
+        {
+    disease: "Early Blight",
+    keywords: ["brown concentric rings", "lower leaves yellowing", "dark leaf spots"],
+    solution: "Remove affected leaves, avoid overhead watering, and apply chlorothalonil or copper fungicide."
+},
+{
+    disease: "Late Blight",
+    keywords: ["water-soaked spots", "grey fuzzy mold", "brown-black patches"],
+    solution: "Remove infected plant parts, improve spacing, and use recommended fungicides like mancozeb."
+},
+{
+    disease: "Leaf Curl",
+    keywords: ["curled leaves", "wrinkled leaves", "stunted growth"],
+    solution: "Use disease-free seeds, control pests like whiteflies, and remove infected leaves."
+},
+{
+    disease: "Downy Mildew",
+    keywords: ["yellow patches", "purple underside growth", "fuzzy mold"],
+    solution: "Increase ventilation, water early in the morning, and apply copper fungicides."
+},
+{
+    disease: "Bacterial Wilt",
+    keywords: ["sudden wilting", "oozing stems", "yellowing leaves"],
+    solution: "Remove infected plants, improve drainage, and avoid planting in infected soil."
+},
+{
+    disease: "Anthracnose",
+    keywords: ["dark sunken spots", "fruit rot", "black lesions"],
+    solution: "Remove infected fruit/branches and apply neem or copper fungicide."
+},
+{
+    disease: "Rust",
+    keywords: ["orange spots", "rust-colored powder", "yellow pustules"],
+    solution: "Remove infected leaves and apply sulfur-based fungicides."
+},
+{
+    disease: "Sooty Mold",
+    keywords: ["black powder", "sticky leaves", "honeydew residue"],
+    solution: "Wash leaves, treat pests like aphids/whiteflies, and improve air circulation."
+},
+{
+    disease: "Black Rot",
+    keywords: ["v-shaped yellow lesions", "black veins", "leaf edge necrosis"],
+    solution: "Ensure proper crop rotation and apply copper fungicide early."
+},
+{
+    disease: "Mosaic Virus",
+    keywords: ["mosaic pattern", "light and dark green patches", "distorted leaves"],
+    solution: "Remove infected plants and control insects like aphids which spread the virus."
+},
+{
+    disease: "Stem Canker",
+    keywords: ["sunken stems", "cracks on stem", "brown lesions"],
+    solution: "Prune infected parts, sterilize tools, and improve drainage."
+},
+{
+    disease: "Fusarium Wilt",
+    keywords: ["yellowing one side", "drooping", "brown inside stem"],
+    solution: "Use resistant varieties and improve soil drainage."
+},
+{
+    disease: "Septoria Leaf Spot",
+    keywords: ["small black dots", "yellow halos", "grey centers"],
+    solution: "Remove infected leaves and apply fungicide containing chlorothalonil."
+},
+{
+    disease: "Canker",
+    keywords: ["sunken bark areas", "oozing sap", "cracked bark"],
+    solution: "Cut out infected bark and apply protective tree paint."
+},
+{
+    disease: "Crown Gall",
+    keywords: ["tumor-like growth", "round galls", "swollen stems"],
+    solution: "Remove infected plants and avoid planting in contaminated soil."
+},
+// ------------------------------------
+// TOMATO DISEASES
+// ------------------------------------
+{
+    disease: "Tomato Early Blight",
+    keywords: ["brown concentric rings", "lower leaf spots", "yellowing lower leaves"],
+    solution: "Remove infected leaves, avoid overhead watering, apply copper or chlorothalonil fungicide."
+},
+{
+    disease: "Tomato Late Blight",
+    keywords: ["water-soaked spots", "grey mold", "dark patches on leaves", "rapid collapse"],
+    solution: "Remove infected parts, increase spacing, apply mancozeb or metalaxyl fungicide."
+},
+{
+    disease: "Tomato Leaf Curl Virus",
+    keywords: ["curled leaves", "upward leaf rolling", "stunted growth", "yellow top leaves"],
+    solution: "Control whiteflies, remove infected plants, use virus-resistant tomato varieties."
+},
+{
+    disease: "Tomato Septoria Leaf Spot",
+    keywords: ["tiny black dots", "grey centers", "yellow halo spots"],
+    solution: "Remove infected leaves and apply fungicides containing chlorothalonil."
+},
+{
+    disease: "Tomato Mosaic Virus",
+    keywords: ["mosaic pattern", "patchy yellow leaves", "distorted growth"],
+    solution: "Remove infected plants, sanitize tools, control aphids."
+},
+
+
+// ------------------------------------
+// POTATO DISEASES
+// ------------------------------------
+{
+    disease: "Potato Early Blight",
+    keywords: ["brown rings", "leaf spots", "yellowing edges"],
+    solution: "Apply copper fungicide and remove infected leaves."
+},
+{
+    disease: "Potato Late Blight",
+    keywords: ["brown lesions", "white mold underside", "rapid leaf death"],
+    solution: "Use mancozeb fungicide and maintain proper crop spacing."
+},
+{
+    disease: "Potato Scab",
+    keywords: ["rough patches", "corky lesions", "scabs on potato skin"],
+    solution: "Maintain soil pH below 5.2 and use resistant varieties."
+},
+{
+    disease: "Potato Blackleg",
+    keywords: ["yellowing", "wilting", "black soft stem"],
+    solution: "Use certified seeds and avoid waterlogged soils."
+},
+
+
+// ------------------------------------
+// MANGO DISEASES
+// ------------------------------------
+{
+    disease: "Mango Anthracnose",
+    keywords: ["black spots", "fruit rot", "dark lesions"],
+    solution: "Apply copper fungicide and prune infected twigs."
+},
+{
+    disease: "Mango Powdery Mildew",
+    keywords: ["white powder", "leaf coating", "flower drop"],
+    solution: "Use sulfur or neem oil spray and improve ventilation."
+},
+{
+    disease: "Mango Dieback",
+    keywords: ["dry shoots", "blackened tips", "dieback twigs"],
+    solution: "Prune infected parts and apply Bordeaux mixture."
+},
+{
+    disease: "Mango Bacterial Canker",
+    keywords: ["oozing gum", "cracked bark", "canker patches"],
+    solution: "Apply copper oxychloride and remove infected areas."
+},
+
+
+// ------------------------------------
+// COTTON DISEASES
+// ------------------------------------
+{
+    disease: "Cotton Wilt (Fusarium)",
+    keywords: ["yellowing one side", "drooping leaves", "brown stem"],
+    solution: "Use resistant varieties and improve drainage."
+},
+{
+    disease: "Cotton Boll Rot",
+    keywords: ["rotten bolls", "brown soft bolls", "fungus on bolls"],
+    solution: "Avoid excessive irrigation and apply fungicide sprays."
+},
+{
+    disease: "Cotton Leaf Curl Virus",
+    keywords: ["curled leaves", "swollen veins", "stunted plants"],
+    solution: "Control whiteflies and use resistant cotton seeds."
+},
+
+
+// ------------------------------------
+// RICE DISEASES
+// ------------------------------------
+{
+    disease: "Rice Blast",
+    keywords: ["diamond spots", "grey centers", "neck infection"],
+    solution: "Apply tricyclazole fungicide, maintain field sanitation."
+},
+{
+    disease: "Rice Bacterial Blight",
+    keywords: ["leaf blight", "yellow stripes", "wilting tillers"],
+    solution: "Use resistant varieties and balanced nitrogen fertilizers."
+},
+{
+    disease: "Rice Sheath Blight",
+    keywords: ["brown sheath patches", "white fungal growth", "lodging"],
+    solution: "Improve drainage and apply validamycin fungicide."
+},
+
+
+// ------------------------------------
+// WHEAT DISEASES
+// ------------------------------------
+{
+    disease: "Wheat Rust",
+    keywords: ["orange pustules", "rust powder", "yellow streaks"],
+    solution: "Use rust-resistant varieties and apply triazole fungicide."
+},
+{
+    disease: "Wheat Powdery Mildew",
+    keywords: ["white mold", "powder on leaves", "leaf curling"],
+    solution: "Improve air movement and apply sulfur fungicides."
+},
+{
+    disease: "Wheat Smut",
+    keywords: ["black powder", "smut balls", "exploding spores"],
+    solution: "Use treated seeds and remove infected plants."
+},
+
+
+// ------------------------------------
+// SUGARCANE DISEASES
+// ------------------------------------
+{
+    disease: "Sugarcane Red Rot",
+    keywords: ["red inside stem", "foul smell", "leaf drying"],
+    solution: "Use resistant cane varieties and remove affected canes."
+},
+{
+    disease: "Sugarcane Smut",
+    keywords: ["black whip", "long black spike", "thin leaves"],
+    solution: "Use disease-free seedlings and destroy infected crops."
+},
+{
+    disease: "Sugarcane Mosaic Virus",
+    keywords: ["mosaic leaf pattern", "yellow streaks", "stunted growth"],
+    solution: "Use virus-free planting material and control aphids."
+},
+
+
+// ------------------------------------
+// GRAPES DISEASES
+// ------------------------------------
+{
+    disease: "Grapes Downy Mildew",
+    keywords: ["yellow oil spots", "white underside fungus", "brown leaves"],
+    solution: "Use Bordeaux mixture and improve ventilation."
+},
+{
+    disease: "Grapes Powdery Mildew",
+    keywords: ["white powder", "leaf curling", "fruit cracking"],
+    solution: "Spray sulfur or neem oil."
+},
+{
+    disease: "Grapes Anthracnose",
+    keywords: ["black sunken spots", "fruit rot", "shot holes"],
+    solution: "Remove infected parts and apply copper fungicide."
+},
+
+
+// ------------------------------------
+// BANANA DISEASES
+// ------------------------------------
+{
+    disease: "Banana Panama Disease",
+    keywords: ["yellow edges", "wilted leaves", "brown vascular tissue"],
+    solution: "Use resistant varieties and destroy infected plants."
+},
+{
+    disease: "Banana Sigatoka",
+    keywords: ["yellow streaks", "brown leaf spots", "dead leaf edges"],
+    solution: "Improve airflow, remove old leaves, apply fungicide sprays."
+},
+{
+    disease: "Banana Bunchy Top Virus",
+    keywords: ["bunched leaves", "upright small leaves", "dark green streaks"],
+    solution: "Remove infected plants and control aphids."
+}
+
+
+    ];
+
+
+    // ---- DIAGNOSIS FUNCTION ---- //
+    function runDiagnosis() {
+        const input = document.getElementById("symptom_input").value.toLowerCase();
+        const resultBox = document.getElementById("diagnosisResult");
+
+        if (!input.trim()) {
+            resultBox.innerHTML = "<p>Please enter symptoms.</p>";
+            return;
+        }
+
+        let matches = [];
+
+        diseaseRules.forEach(rule => {
+            rule.keywords.forEach(keyword => {
+                if (input.includes(keyword)) {
+                    matches.push(rule);
+                }
+            });
+        });
+
+        // No matches
+        if (matches.length === 0) {
+            resultBox.innerHTML = `
+                <div class="diagnosis-card">
+                    <h4>No clear disease found</h4>
+                    <p>Try adding more symptoms or describing more clearly.</p>
+                </div>`;
+            return;
+        }
+
+        // Show matched diseases
+        let html = "";
+        matches.forEach(m => {
+            html += `
+                <div class="diagnosis-card">
+                    <h4>${m.disease}</h4>
+                    <p><strong>Symptoms Detected:</strong> match with rule</p>
+                    <p><strong>Solution:</strong> ${m.solution}</p>
+                </div>`;
+        });
+
+        resultBox.innerHTML = html;
+    }
+</script>
+
+</body>
+</html>
