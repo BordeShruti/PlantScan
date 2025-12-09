@@ -26,15 +26,37 @@ PlantScan is an **AI-powered web application** that helps users detect plant dis
 ---
 
 ## 🎯 Demo
+**🏡 Home Screen**
+![Home Page](z1.png)
 
+
+
+**👤 Welcome Screen**
+![Welcome Page](z2.png)
+
+
+
+**🔬 Plant Disease Detection Prediction Result**
+![Plant Disease Detection](z3.png)
+
+
+
+**📋 Rule-Based Plant Symptom Checker**
+![Rule-based Plant Symptom Checker](z4.png)
+
+
+
+**💡 Contribute Pest / Fertilizer Recommendation**
+![Add Plant](z5.png)
+
+**🌱 Leaf Diagnosis Learning Modules**
+![Workshop](z6.png)
+
+**🤝 Our Partnerships & Government Resources**
+![Parternership](z7.png)
 
 ## 💻 Files
-
-
-
-
-
-
+![Parternership](Screenshot 2025-12-09 011324.png)
 
 ## 🧠 How to Run the Project (Step-by-Step)
 Follow these instructions in **VS Code Terminal**:
@@ -68,4 +90,5 @@ PlantScan will start running! 🌱✨
 
 
 **👩‍💻 Author**
+
 Made with 💻 and ☘️ by **SHRUTI_BORDE**
