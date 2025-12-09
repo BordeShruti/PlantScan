@@ -56,7 +56,8 @@ PlantScan is an **AI-powered web application** that helps users detect plant dis
 ![Parternership](z7.png)
 
 ## 💻 Files
-![Parternership](Screenshot 2025-12-09 011324.png)
+**Files**
+![Files](Screenshot 2025-12-09 011324.png.png)
 
 ## 🧠 How to Run the Project (Step-by-Step)
 Follow these instructions in **VS Code Terminal**:
